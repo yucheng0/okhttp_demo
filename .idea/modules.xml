@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/okhttp_demo.iml" filepath="$PROJECT_DIR$/okhttp_demo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttp_demo-master.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttp_demo-master.iml" group="okhttp_demo-master" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/okhttp_demo-master-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/okhttp_demo-master-app.iml" group="okhttp_demo-master/app" />
+    </modules>
+  </component>
+</project>
