@@ -1,6 +1,7 @@
 package com.example.givemepass.okhttpdemo
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -11,7 +12,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
-
+val TAG = "myTag"
 class MainActivity : AppCompatActivity() {
     private lateinit var service: ExecutorService
     private lateinit var client: OkHttpClient
@@ -35,10 +36,15 @@ class MainActivity : AppCompatActivity() {
         get_json_btn.setOnClickListener { handleJson() }
     }
 
-    //在網路讀一個存在的json檔案而已（那我是不是可以用來讀Rest的呢？
+    //在網路讀一個存在的json檔案而已（那我是不是可以用來讀Rest的呢？）
     private fun handleJson() {
+        val JSON = MediaType.parse("application/json; charset=utf-8");
+        val body= RequestBody.create(JSON, "{\"account\":\"w06\"    ,\"pw\":\"w\" , \"timezone\":8 }")
         val request = Request.Builder()
-                .url("https://raw.githubusercontent.com/givemepassxd999/okhttp_demo/master/app/src/main/res/sample.json")
+    //            .url("https://raw.githubusercontent.com/givemepassxd999/okhttp_demo/master/app/src/main/res/sample.json")
+      //       .addHeader("Authorization",token) //token 給你的session
+                .url("http://202.88.100.249/SAWELLPlus_Club/php/3rd_login.php")
+                .post(body)
                 .build()
         client.newCall(request).enqueue(object : Callback {
             override fun onFailure(request: Request, e: IOException) {
@@ -46,9 +52,15 @@ class MainActivity : AppCompatActivity() {
             }
 
             @Throws(IOException::class)
+            //正確回應
             override fun onResponse(response: Response) {
-                val resStr = response.body().string()
-                val jsonData = Gson().fromJson<List<JsonData>>(resStr, object : TypeToken<List<JsonData>>() {
+               val resStr = response.body().string()  //讀到值了
+                val sessionid =response.header("Set-Cookie")
+             Log.d(TAG, "onResponse: $resStr")
+               Log.d(TAG, "sessionid: $sessionid")
+//已有了值了所以解析Json
+                //把name, city, country  印出來
+       /*         val jsonData = Gson().fromJson<List<JsonData>>(resStr, object : TypeToken<List<JsonData>>() {
 
                 }.type)
                 runOnUiThread {
@@ -65,7 +77,7 @@ class MainActivity : AppCompatActivity() {
                         sb.append("\n")
                     }
                     text.text = sb.toString()
-                }
+                } */
             }
         })
     }
@@ -82,6 +94,7 @@ class MainActivity : AppCompatActivity() {
             @Throws(IOException::class)
             override fun onResponse(response: Response) {
                 val resStr = response.body().string()
+                Log.d(TAG, "onResponse1: $resStr")
                 runOnUiThread { text.text = resStr }
             }
         })
