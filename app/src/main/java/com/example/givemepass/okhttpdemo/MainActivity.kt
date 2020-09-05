@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         service = Executors.newSingleThreadExecutor()
     }
 
+    //按鍵處理
     private fun initView() {
         setContentView(R.layout.activity_main)
         send_request_in_background.setOnClickListener { handleRequestInBackground() }
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
         get_json_btn.setOnClickListener { handleJson() }
     }
 
+    //在網路讀一個存在的json檔案而已（那我是不是可以用來讀Rest的呢？
     private fun handleJson() {
         val request = Request.Builder()
                 .url("https://raw.githubusercontent.com/givemepassxd999/okhttp_demo/master/app/src/main/res/sample.json")
